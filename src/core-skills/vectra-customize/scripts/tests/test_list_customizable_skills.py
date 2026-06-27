@@ -63,49 +63,49 @@ class ScannerTest(unittest.TestCase):
     def test_agent_only_skill_detected(self):
         _make_skill(
             self.skills,
-            "bmad-agent-pm",
-            "[agent]\nicon = \"🧠\"\n",
-            "---\nname: bmad-agent-pm\ndescription: Product manager.\n---\n",
+            "emcomm-agent-coml",
+            "[agent]\nicon = \"📡\"\n",
+            "---\nname: emcomm-agent-coml\ndescription: Communications Unit Leader.\n---\n",
         )
         result = MODULE.scan_skills([self.skills], self.root)
         self.assertEqual(len(result["agents"]), 1)
         self.assertEqual(len(result["workflows"]), 0)
         entry = result["agents"][0]
-        self.assertEqual(entry["name"], "bmad-agent-pm")
+        self.assertEqual(entry["name"], "emcomm-agent-coml")
         self.assertEqual(entry["surface"], "agent")
-        self.assertEqual(entry["description"], "Product manager.")
+        self.assertEqual(entry["description"], "Communications Unit Leader.")
         self.assertFalse(entry["has_team_override"])
         self.assertFalse(entry["has_user_override"])
 
     def test_workflow_only_skill_detected(self):
         _make_skill(
             self.skills,
-            "bmad-create-prd",
+            "emcomm-engine",
             "[workflow]\npersistent_facts = []\n",
-            "---\nname: bmad-create-prd\ndescription: 'Create a PRD.'\n---\n",
+            "---\nname: emcomm-engine\ndescription: 'Launch the VECTRA engine.'\n---\n",
         )
         result = MODULE.scan_skills([self.skills], self.root)
         self.assertEqual(len(result["agents"]), 0)
         self.assertEqual(len(result["workflows"]), 1)
         entry = result["workflows"][0]
-        self.assertEqual(entry["description"], "Create a PRD.")
+        self.assertEqual(entry["description"], "Launch the VECTRA engine.")
 
     def test_dual_surface_skill_emits_two_entries(self):
         _make_skill(
             self.skills,
-            "bmad-dual",
+            "emcomm-dual",
             "[agent]\nicon = \"x\"\n\n[workflow]\npersistent_facts = []\n",
-            "---\nname: bmad-dual\ndescription: Dual.\n---\n",
+            "---\nname: emcomm-dual\ndescription: Dual.\n---\n",
         )
         result = MODULE.scan_skills([self.skills], self.root)
         self.assertEqual(len(result["agents"]), 1)
         self.assertEqual(len(result["workflows"]), 1)
-        self.assertEqual(result["agents"][0]["name"], "bmad-dual")
-        self.assertEqual(result["workflows"][0]["name"], "bmad-dual")
+        self.assertEqual(result["agents"][0]["name"], "emcomm-dual")
+        self.assertEqual(result["workflows"][0]["name"], "emcomm-dual")
 
     def test_skill_without_customize_toml_ignored(self):
-        (self.skills / "bmad-plain").mkdir()
-        (self.skills / "bmad-plain" / "SKILL.md").write_text("# plain\n")
+        (self.skills / "emcomm-plain").mkdir()
+        (self.skills / "emcomm-plain" / "SKILL.md").write_text("# plain\n")
         result = MODULE.scan_skills([self.skills], self.root)
         self.assertEqual(len(result["agents"]) + len(result["workflows"]), 0)
         self.assertEqual(result["errors"], [])
@@ -113,45 +113,45 @@ class ScannerTest(unittest.TestCase):
     def test_existing_team_override_flagged(self):
         _make_skill(
             self.skills,
-            "bmad-agent-pm",
-            "[agent]\nicon = \"x\"\n",
-            "---\nname: bmad-agent-pm\ndescription: PM.\n---\n",
+            "emcomm-agent-coml",
+            "[agent]\nicon = \"📡\"\n",
+            "---\nname: emcomm-agent-coml\ndescription: COML.\n---\n",
         )
-        (self.custom / "bmad-agent-pm.toml").write_text("[agent]\n")
+        (self.custom / "emcomm-agent-coml.toml").write_text("[agent]\n")
         result = MODULE.scan_skills([self.skills], self.root)
         entry = result["agents"][0]
         self.assertTrue(entry["has_team_override"])
         self.assertFalse(entry["has_user_override"])
 
     def test_missing_surface_block_reports_error(self):
-        _make_skill(self.skills, "bmad-broken", "[not_a_surface]\nfoo = 1\n")
+        _make_skill(self.skills, "emcomm-broken", "[not_a_surface]\nfoo = 1\n")
         result = MODULE.scan_skills([self.skills], self.root)
         self.assertEqual(len(result["agents"]) + len(result["workflows"]), 0)
         self.assertEqual(len(result["errors"]), 1)
         self.assertIn("no [agent] or [workflow] block", result["errors"][0])
 
     def test_malformed_toml_reports_error_without_aborting(self):
-        skill_dir = self.skills / "bmad-bad"
+        skill_dir = self.skills / "emcomm-bad"
         skill_dir.mkdir()
         (skill_dir / "customize.toml").write_text("this is not [valid toml\n")
         # Plus a good sibling to confirm scanning continues.
         _make_skill(
             self.skills,
-            "bmad-good",
+            "emcomm-good",
             "[agent]\nicon = \"x\"\n",
-            "---\nname: bmad-good\ndescription: Good.\n---\n",
+            "---\nname: emcomm-good\ndescription: Good.\n---\n",
         )
         result = MODULE.scan_skills([self.skills], self.root)
         self.assertEqual(len(result["agents"]), 1)
-        self.assertEqual(result["agents"][0]["name"], "bmad-good")
+        self.assertEqual(result["agents"][0]["name"], "emcomm-good")
         self.assertTrue(any("failed to parse" in e for e in result["errors"]))
 
     def test_description_with_double_quotes_stripped(self):
         _make_skill(
             self.skills,
-            "bmad-q",
+            "emcomm-q",
             "[agent]\nicon = \"x\"\n",
-            '---\nname: bmad-q\ndescription: "Double-quoted desc."\n---\n',
+            '---\nname: emcomm-q\ndescription: "Double-quoted desc."\n---\n',
         )
         result = MODULE.scan_skills([self.skills], self.root)
         self.assertEqual(result["agents"][0]["description"], "Double-quoted desc.")
@@ -161,19 +161,19 @@ class ScannerTest(unittest.TestCase):
         extra_root.mkdir()
         _make_skill(
             self.skills,
-            "bmad-agent-pm",
-            "[agent]\nicon = \"x\"\n",
-            "---\nname: bmad-agent-pm\ndescription: PM.\n---\n",
+            "emcomm-agent-coml",
+            "[agent]\nicon = \"📡\"\n",
+            "---\nname: emcomm-agent-coml\ndescription: COML.\n---\n",
         )
         _make_skill(
             extra_root,
-            "bmad-agent-dev",
-            "[agent]\nicon = \"y\"\n",
-            "---\nname: bmad-agent-dev\ndescription: Dev.\n---\n",
+            "emcomm-agent-net-eng",
+            "[agent]\nicon = \"🔧\"\n",
+            "---\nname: emcomm-agent-net-eng\ndescription: Net Engineer.\n---\n",
         )
         result = MODULE.scan_skills([self.skills, extra_root], self.root)
         names = {a["name"] for a in result["agents"]}
-        self.assertEqual(names, {"bmad-agent-pm", "bmad-agent-dev"})
+        self.assertEqual(names, {"emcomm-agent-coml", "emcomm-agent-net-eng"})
         self.assertEqual(len(result["scanned_roots"]), 2)
 
     def test_duplicate_skill_name_across_roots_first_wins(self):
@@ -181,15 +181,15 @@ class ScannerTest(unittest.TestCase):
         extra_root.mkdir()
         _make_skill(
             self.skills,
-            "bmad-agent-pm",
+            "emcomm-agent-coml",
             "[agent]\nicon = \"primary\"\n",
-            "---\nname: bmad-agent-pm\ndescription: Primary.\n---\n",
+            "---\nname: emcomm-agent-coml\ndescription: Primary.\n---\n",
         )
         _make_skill(
             extra_root,
-            "bmad-agent-pm",
+            "emcomm-agent-coml",
             "[agent]\nicon = \"duplicate\"\n",
-            "---\nname: bmad-agent-pm\ndescription: Duplicate.\n---\n",
+            "---\nname: emcomm-agent-coml\ndescription: Duplicate.\n---\n",
         )
         result = MODULE.scan_skills([self.skills, extra_root], self.root)
         self.assertEqual(len(result["agents"]), 1)
@@ -206,9 +206,9 @@ class ScannerTest(unittest.TestCase):
     def test_cli_emits_valid_json_and_exits_zero(self):
         _make_skill(
             self.skills,
-            "bmad-agent-pm",
-            "[agent]\nicon = \"x\"\n",
-            "---\nname: bmad-agent-pm\ndescription: PM.\n---\n",
+            "emcomm-agent-coml",
+            "[agent]\nicon = \"📡\"\n",
+            "---\nname: emcomm-agent-coml\ndescription: COML.\n---\n",
         )
         proc = subprocess.run(
             [

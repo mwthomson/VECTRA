@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.11"
 # ///
-"""Enumerate customizable BMad skills installed alongside this one.
+"""Enumerate customizable VECTRA skills installed alongside this one.
 
 Scans a skills directory (by default: the directory this script's own skill
 lives in, derived from __file__), finds every sibling directory containing a
@@ -11,7 +11,7 @@ top-level blocks, reads the skill's SKILL.md frontmatter description for a
 one-liner, and checks whether override files already exist in
 `{project-root}/_bmad/custom/`.
 
-Skills in BMad are loaded either from a project-local location (e.g. the
+Skills in VECTRA are loaded either from a project-local location (e.g. the
 project's `.claude/skills/` or `.cursor/skills/`) or from a user-global
 location (e.g. `~/.claude/skills/`). We do not hardcode those paths — the
 running skill's own location is the source of truth for sibling discovery.
@@ -44,7 +44,7 @@ FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 def default_skills_root() -> Path:
     """Derive the skills root from this script's location.
 
-    Layout assumption: {skills_root}/bmad-customize/scripts/list_customizable_skills.py.
+    Layout assumption: {skills_root}/vectra-customize/scripts/list_customizable_skills.py.
     So the skills root is three parents up from this file.
     """
     return Path(__file__).resolve().parent.parent.parent
@@ -69,7 +69,7 @@ def read_frontmatter_description(skill_md: Path) -> str:
     for line in m.group(1).splitlines():
         stripped = line.strip()
         if stripped.startswith("description:"):
-            value = stripped[len("description:") :].strip()
+            value = stripped[len("description:"):].strip()
             # Strip surrounding quotes if present.
             if (value.startswith("'") and value.endswith("'")) or (
                 value.startswith('"') and value.endswith('"')
@@ -168,7 +168,7 @@ def scan_skills(
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "List customizable BMad skills installed alongside this one, "
+            "List customizable VECTRA skills installed alongside this one, "
             "grouped by surface (agent vs workflow), with override status "
             "looked up against {project-root}/_bmad/custom/."
         )

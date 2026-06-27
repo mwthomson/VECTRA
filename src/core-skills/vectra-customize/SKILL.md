@@ -1,25 +1,25 @@
 ---
-name: bmad-customize
-description: Authors and updates customization overrides for installed BMad skills. Use when the user says 'customize bmad', 'override a skill', 'change agent behavior', or 'customize a workflow'.
+name: vectra-customize
+description: Authors and updates customization overrides for installed VECTRA skills. Use when the user says 'customize vectra', 'override a skill', 'change agent behavior', or 'customize a workflow'.
 ---
 
-# BMad Customize
+# VECTRA Customize
 
 Translate the user's intent into a correctly-placed TOML override file under `{project-root}/_bmad/custom/` for a customizable agent or workflow skill. Discover, route, author, write, verify.
 
-Scope v1: per-skill `[agent]` overrides (`bmad-agent-<role>.toml` / `.user.toml`) and per-skill `[workflow]` overrides (`bmad-<workflow>.toml` / `.user.toml`). Central config (`{project-root}/_bmad/custom/config.toml`) is out of scope — point users at the [How to Customize BMad guide](https://docs.bmad-method.org/how-to/customize-bmad/).
+Scope v1: per-skill `[agent]` overrides (`emcomm-agent-<role>.toml` / `.user.toml`) and per-skill `[workflow]` overrides (`emcomm-<workflow>.toml` / `.user.toml`). Central config (`{project-root}/_bmad/custom/config.toml`) is out of scope — edit it directly.
 
 When the target's `customize.toml` doesn't expose what the user wants, say so plainly. Don't invent fields.
 
 ## Preflight
 
-- No `{project-root}/_bmad/` → BMad isn't installed. Say so, stop.
+- No `{project-root}/_bmad/` → VECTRA isn't installed. Say so, stop.
 - `{project-root}/_bmad/scripts/resolve_customization.py` missing → continue, but Step 6 verify falls back to manual merge.
 - Both present → proceed.
 
 ## Activation
 
-Load `_bmad/config.toml` and `_bmad/config.user.toml` from `{project-root}` for `user_name` (default `BMad`) and `communication_language` (default `English`). Greet. If the user's invocation already names a target skill AND a specific change, jump to Step 3.
+Load `_bmad/config.toml` and `_bmad/config.user.toml` from `{project-root}` for `user_name` (default `VECTRA`) and `communication_language` (default `English`). Greet. If the user's invocation already names a target skill AND a specific change, jump to Step 3.
 
 ## Step 1: Classify intent
 
@@ -47,8 +47,8 @@ Read the target's `customize.toml`. Top-level `[agent]` or `[workflow]` block de
 If a team or user override already exists, read it first and summarize what's already overridden before composing.
 
 **Cross-cutting intent — walk both surfaces with the user:**
-- Every workflow a given agent runs → agent surface (e.g. `bmad-agent-pm.toml` with `persistent_facts`, `principles`).
-- One workflow only → workflow surface (e.g. `bmad-prd.toml` with `activation_steps_prepend`).
+- Every workflow a given agent runs → agent surface (e.g. `emcomm-agent-coml.toml` with `persistent_facts`, `principles`).
+- One workflow only → workflow surface (e.g. `emcomm-engine.toml` with `activation_steps_prepend`).
 - Several specific workflows → multiple workflow overrides in sequence, not an agent override.
 
 **Single-surface heuristic:**
@@ -57,7 +57,7 @@ If a team or user override already exists, read it first and summarize what's al
 
 When ambiguous, present both with tradeoff, recommend one, let the user decide.
 
-Intent outside the exposed surface (step logic, ordering, anything not in `customize.toml`): say so; offer `activation_steps_prepend`/`append` or `persistent_facts` as approximations, or recommend `bmad-builder` to create a custom skill.
+Intent outside the exposed surface (step logic, ordering, anything not in `customize.toml`): say so; offer `activation_steps_prepend`/`append` or `persistent_facts` as approximations, or recommend editing the skill's `SKILL.md` directly for deeper changes.
 
 ## Step 4: Compose the override
 
@@ -106,6 +106,6 @@ Otherwise the skill isn't done — finish or tell the user they're exiting incom
 
 ## When this skill can't help
 
-- **Central config** (`{project-root}/_bmad/custom/config.toml`) — see the [How to Customize BMad guide](https://docs.bmad-method.org/how-to/customize-bmad/).
-- **Step logic, ordering, behavior not in `customize.toml`** — open a feature request, or use `bmad-builder` to create a custom skill. Offer to help with either.
-- **Skills without a `customize.toml`** — not customizable.
+- **Central config** (`{project-root}/_bmad/custom/config.toml`) — edit it directly.
+- **Step logic, ordering, behavior not in `customize.toml`** — edit the skill's `SKILL.md` directly.
+- **Skills without a `customize.toml`** — not customizable via this tool.
