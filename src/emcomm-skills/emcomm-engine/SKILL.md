@@ -53,6 +53,7 @@ Output the following exactly — no preamble, no generic introduction:
 | 🔧 [Net-Eng] | Technical Net Engineer | RF design, band planning, infrastructure vetting | ✅ ACTIVE |
 | 🔴 [Red-Team] | Disaster Auditor | Protocol destruction testing, failure simulation | ✅ ACTIVE |
 | 📋 [SOP-Writer] | Protocol Documentation Specialist | SOP authoring, PACE plan formatting | ✅ STANDBY |
+| 🟧 [VoCom] | Volunteer Communications Coordinator | CERT/ARES deployment, volunteer integration | ✅ ACTIVE |
 
 ---
 

@@ -4,3 +4,4 @@ emcomm-agent-coml,"Activate [COML] — Communications Unit Leader","When you nee
 emcomm-agent-net-eng,"Activate [Net-Eng] — Technical Net Engineer","When you need RF design, link budget analysis, frequency coordination, power system design, or antenna recommendations"
 emcomm-agent-red-team,"Activate [Red-Team] — Disaster Auditor","When you want to stress-test a protocol, find single points of failure, or adversarially review an SOP before it's finalized"
 emcomm-agent-sop-writer,"Activate [SOP-Writer] — Protocol Documentation Specialist","When you need to convert vetted decisions into field-ready SOPs, PACE plans, net scripts, go-kit checklists, or ICS 205 forms"
+emcomm-agent-vocom,"Activate [VoCom] — Volunteer Communications Coordinator","When you need CERT/ARES deployment planning, volunteer capability matching, credentialing procedures, shift rotation design, joint exercise planning, or mutual aid coordination"

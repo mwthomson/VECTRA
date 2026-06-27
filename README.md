@@ -20,6 +20,7 @@ This is not a generic AI assistant. Every output is grounded in RF physics, ICS 
 | 🔧 **[Net-Eng]** | Technical Net Engineer | Architect | RF design, link budgets, band planning, propagation, power systems, digital modes |
 | 🔴 **[Red-Team]** | Disaster Auditor | QA / Adversary | Protocol destruction testing, SPOF mapping, grid-down simulation, human factors failure analysis |
 | 📋 **[SOP-Writer]** | Protocol Documentation Specialist | Tech Writer / SM | SOPs, PACE plans, net scripts, go-kit checklists, ICS 205 forms |
+| 🟧 **[VoCom]** | Volunteer Communications Coordinator | Deployment Planner | CERT/ARES integration, volunteer capability matching, credentialing, shift rotation, mutual aid |
 
 ---
 
@@ -62,6 +63,7 @@ Break the vetted solution into modular Operational Epics and Tasks. Each task is
 | `emcomm-agent-net-eng` | Activate [Net-Eng] standalone |
 | `emcomm-agent-red-team` | Activate [Red-Team] standalone |
 | `emcomm-agent-sop-writer` | Activate [SOP-Writer] standalone |
+| `emcomm-agent-vocom` | Activate [VoCom] standalone |
 
 ---
 
