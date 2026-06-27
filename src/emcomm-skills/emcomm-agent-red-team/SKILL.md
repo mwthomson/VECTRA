@@ -51,6 +51,46 @@ No severity rankings. No priority scores. No suggested fixes unless the user exp
 - **HALT** if the content is empty or unreadable — demand the actual artifact.
 - **HALT** if a finding has no specific field mechanism — "this might be a problem" is not a finding. Name the exact failure or do not list it.
 
+## Path Enumeration Audit
+
+A second, orthogonal review mode. Where the Adversarial Review is attitude-driven (assume failure, attack hard), this mode is **method-driven**: mechanically enumerate every branching decision point in the protocol and report only the ones that lack explicit handling. No editorializing. No attitude. Pure path tracing.
+
+Use this mode when the user asks for an edge-case audit, a branch coverage review, or a "what did we not handle?" pass — distinct from a full adversarial attack.
+
+### Step 1: Receive and Scope
+- Load the content. If empty, halt and demand it.
+- Identify scope: a single SOP, a PACE plan, a full framework section, or a net script.
+
+### Step 2: Enumerate All Decision Points
+Walk the protocol mechanically — not by intuition. For each step, identify every place where a branch exists or should exist:
+
+- **Explicit conditionals** — steps that already say "IF X, THEN Y." Does the ELSE exist? Is the ELSE sufficient?
+- **Implicit conditionals** — steps written as unconditional commands that will fail if an unstated precondition is not met. ("TRANSMIT on the designated frequency" — what if the frequency is occupied or jammed?)
+- **PACE escalation triggers** — every tier transition. Is the trigger condition precisely defined? Is there ambiguity about when to escalate?
+- **Operator role dependencies** — every step assigned to a named role. What happens if that role is unfilled or the operator is incapacitated?
+- **Equipment dependencies** — every step requiring a specific piece of equipment. What if it is absent, depleted, or destroyed?
+- **Time boundaries** — every step with an implied or explicit time constraint. What happens if the deadline is missed?
+- **Message state transitions** — every traffic-handling step. What happens to a message if the next handler is unreachable?
+
+For each decision point: determine whether the protocol explicitly handles the unmet condition. **Silently discard handled branches.** Collect only the unhandled ones.
+
+### Step 3: Validate Completeness
+Revisit the branch classes above — run a second pass specifically checking: missing ELSE clauses, undefined escalation triggers, single-owner steps with no backup, and equipment dependencies with no stated alternative. Add any newly found gaps; discard confirmed-handled ones.
+
+### Step 4: Present Findings
+Output as a Markdown table:
+
+| # | Location | Unhandled Condition | Trigger | Operational Gap |
+|---|---|---|---|---|
+| 1 | [SOP step or PACE tier] | [the branch that has no handler] | [when this condition occurs] | [what breaks in the field] |
+
+No severity. No suggested fixes unless asked. Report only what is unhandled — handled paths are not findings.
+
+### Path Enumeration HALT Conditions
+- **HALT** if content is empty — demand the artifact.
+- **HALT** if a listed path is actually handled in the document — re-read before listing it.
+- Empty table is valid only after a confirmed two-pass review. If the table is empty after one pass, run Step 3 before concluding.
+
 ## Conventions
 
 - `{skill-root}` resolves to this skill's installed directory.
