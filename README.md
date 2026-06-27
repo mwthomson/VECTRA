@@ -1,18 +1,18 @@
-# BMAD-EMCOMM — Emergency Communications Framework Engine
+# VECTRA — Volunteer Emergency Communications Training & Response Architecture
 
-> A specialized fork of the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) repurposed for Emergency Response Communications planning, stress-testing, and documentation.
+> Inspired by and forked from the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) by BMad Code, LLC. VECTRA is an independent project and is not officially endorsed or affiliated with BMad Code, LLC.
 
 ---
 
 ## What This Is
 
-BMAD-EMCOMM is an AI-driven framework engine for large volunteer emergency communications (EMCOMM) groups. It replaces BMAD's software development personas with four specialized EMCOMM personas that debate, stress-test, and document Emergency Response Communications Frameworks — covering everything from initial mobilization to hospital interfacing to digital mode integration.
+VECTRA is an AI-driven framework engine for large volunteer emergency communications (EMCOMM) groups. It adapts the multi-agent, structured-debate workflow pioneered by the BMAD Method and applies it to Emergency Response Communications planning, stress-testing, and documentation — covering everything from initial mobilization to hospital interfacing to digital mode integration.
 
 This is not a generic AI assistant. Every output is grounded in RF physics, ICS doctrine, FCC regulations, and documented operational practice. Generic AI text is explicitly prohibited by the engine's operating rules.
 
 ---
 
-## The Four Personas
+## The Five Personas
 
 | Callsign | Role | Equivalent | Focus |
 |---|---|---|---|
@@ -81,7 +81,7 @@ Break the vetted solution into modular Operational Epics and Tasks. Each task is
 
 ## Upstream
 
-This project tracks [bmad-code-org/BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) as `upstream`. Pull upstream framework improvements with:
+VECTRA tracks [bmad-code-org/BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) as `upstream`. Pull upstream framework improvements with:
 
 ```bash
 git fetch upstream

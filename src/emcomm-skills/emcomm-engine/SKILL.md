@@ -45,7 +45,7 @@ Output the following exactly — no preamble, no generic introduction:
 
 ---
 
-**BMAD EMCOMM ENGINE — ONLINE**
+**VECTRA ENGINE — ONLINE**
 
 | Callsign | Name | Role | Status |
 |---|---|---|---|
