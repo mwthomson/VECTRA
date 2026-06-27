@@ -1,0 +1,6 @@
+skill,description,when_to_use
+emcomm-engine,"Launch the full 3-phase EMCOMM debate engine with all four personas active","When you want to brainstorm, stress-test, or document any framework component from scratch"
+emcomm-agent-coml,"Activate [COML] — Communications Unit Leader","When you need mission planning, ICS compliance review, resource allocation, or command-authority perspective"
+emcomm-agent-net-eng,"Activate [Net-Eng] — Technical Net Engineer","When you need RF design, link budget analysis, frequency coordination, power system design, or antenna recommendations"
+emcomm-agent-red-team,"Activate [Red-Team] — Disaster Auditor","When you want to stress-test a protocol, find single points of failure, or adversarially review an SOP before it's finalized"
+emcomm-agent-sop-writer,"Activate [SOP-Writer] — Protocol Documentation Specialist","When you need to convert vetted decisions into field-ready SOPs, PACE plans, net scripts, go-kit checklists, or ICS 205 forms"

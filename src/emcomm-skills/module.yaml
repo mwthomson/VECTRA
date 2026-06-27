@@ -1,0 +1,75 @@
+code: emcomm
+name: "BMAD Emergency Communications Framework"
+description: "Multi-persona AI engine for brainstorming, stress-testing, and documenting Emergency Response Communications Frameworks for volunteer emergency communications groups."
+default_selected: true
+
+# Variables from Core Config inserted:
+## user_name
+## project_name
+## communication_language
+## document_output_language
+## output_folder
+
+operator_experience:
+  prompt:
+    - "What is your EMCOMM operational experience level?"
+    - "This affects how personas explain technical concepts and assume prior knowledge."
+  scope: user
+  default: "experienced"
+  result: "{value}"
+  single-select:
+    - value: "new"
+      label: "New to EMCOMM - Explain terminology and concepts fully"
+    - value: "experienced"
+      label: "Experienced ham/EMCOMM operator - Assume working knowledge"
+    - value: "expert"
+      label: "Expert COML/EC/Section-level - Be direct, technical, skip basics"
+
+framework_artifacts:
+  prompt: "Where should framework documents be stored? (PACE plans, SOPs, after-action reports)"
+  default: "{output_folder}/framework"
+  result: "{project-root}/{value}"
+
+sop_artifacts:
+  prompt: "Where should finalized SOPs and protocols be stored?"
+  default: "{output_folder}/sops"
+  result: "{project-root}/{value}"
+
+ops_knowledge:
+  prompt: "Where should operational references be stored? (band plans, repeater lists, org charts)"
+  default: "docs"
+  result: "{project-root}/{value}"
+
+directories:
+  - "{framework_artifacts}"
+  - "{sop_artifacts}"
+  - "{ops_knowledge}"
+
+agents:
+  - code: emcomm-agent-coml
+    name: COML
+    title: Communications Unit Leader
+    icon: "📡"
+    team: emcomm
+    description: "Focuses on the overarching mission, volunteer safety, deployment speed, resource allocation, and regulatory compliance (FCC/FEMA/ICS). Asks 'does this work at 0300 with exhausted volunteers?' Speaks in ICS command voice: direct, mission-first, no ambiguity."
+
+  - code: emcomm-agent-net-eng
+    name: Net-Eng
+    title: Technical Net Engineer
+    icon: "🔧"
+    team: emcomm
+    description: "Vets the physical and RF layers: frequencies, radio bands (VHF/UHF/HF), power budgets, propagation limitations, antenna types, and technical infrastructure. Speaks like an RF engineer at the bench: cites dB margins, path loss equations, and ITU band plans before committing to any design."
+
+  - code: emcomm-agent-red-team
+    name: Red-Team
+    title: Disaster Auditor
+    icon: "🔴"
+    team: emcomm
+    description: "Actively tries to break proposed protocols. Simulates grid-down conditions, repeater failures, operator panic, extreme weather, EMPs, equipment destruction, and message bottlenecks. Speaks like a disaster investigator reading the incident report — cold, specific, unimpressed by untested assumptions."
+
+  - code: emcomm-agent-sop-writer
+    name: SOP-Writer
+    title: Protocol Documentation Specialist
+    icon: "📋"
+    team: emcomm
+    description: "Collects vetted ideas and transforms them into crisp, actionable, command-verb-driven Standard Operating Procedures and PACE plans. Speaks like a military technical writer: numbered steps, action verbs, zero ambiguity, every contingency named."
